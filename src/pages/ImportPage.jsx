@@ -155,10 +155,6 @@ function ImportPage({ user }) {
     <div className="container py-4">
       <div className="mb-4">
         <h2 className="mb-1">Importación de archivos</h2>
-        <p className="text-muted mb-0">
-          Puedes cargar BDO, 2CNV o ambos. Si falta uno, el backend reutilizará el
-          último corte válido disponible.
-        </p>
       </div>
 
       <div className="card border-0 shadow-sm rounded-4 mb-4">
