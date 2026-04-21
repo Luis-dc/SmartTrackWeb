@@ -7,6 +7,7 @@ import MainLayout from './layouts/MainLayout'
 import { clearAuth, getUser, isAuthenticated } from './utils/auth'
 import AnalisisEpinPage from './pages/AnalisisEpinPage'
 import TendenciasPage from './pages/TendenciasPage'
+import UsuariosPage from './pages/UsuariosPage'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(isAuthenticated())
@@ -45,6 +46,7 @@ function App() {
       items.push({ key: 'interesados', label: 'Interesados' })
       items.push({ key: 'analisis-epin', label: 'Análisis EPIN' })
       items.push({ key: 'tendencias', label: 'Tendencias' })
+      items.push({ key: 'usuarios', label: 'Usuarios' })
     }
 
     if (user.role === 'ADMIN') {
@@ -64,6 +66,8 @@ function App() {
         return 'Importaciones'
       case 'tendencias':
         return 'Tendencias'
+        case 'usuarios':
+        return 'Usuarios'
       case 'chat':
       default:
         return 'Chatbot'
@@ -80,6 +84,8 @@ function App() {
         return <ImportPage user={user} />
       case 'tendencias':
         return <TendenciasPage />
+      case 'usuarios':
+        return <UsuariosPage user={user} />
       case 'chat':
       default:
         return (
