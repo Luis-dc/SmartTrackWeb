@@ -168,6 +168,10 @@ function UsuariosPage({ user }) {
   }
 
   async function handleDelete(row) {
+    if (row.role === 'ADMIN') {
+      setError('Los usuarios ADMIN no pueden ser desactivados.')
+      return
+    }
     const confirmed = window.confirm(
       `¿Deseas desactivar al usuario "${row.name}"?`
     )
@@ -358,14 +362,16 @@ function UsuariosPage({ user }) {
                               Editar
                             </button>
 
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-outline-danger"
-                              onClick={() => handleDelete(row)}
-                              disabled={Number(row.is_active) !== 1}
-                            >
-                              Desactivar
-                            </button>
+                            {row.role !== 'ADMIN' && (
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-danger"
+                                onClick={() => handleDelete(row)}
+                                disabled={Number(row.is_active) !== 1}
+                              >
+                                Desactivar
+                              </button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -479,7 +485,7 @@ function UsuariosPage({ user }) {
                       </select>
                     </div>
 
-                    {isAdmin && editingUser && (
+                    {isAdmin && editingUser && editingUser.role !== 'ADMIN' && (
                       <div className="col-12">
                         <label className="form-label">Estado</label>
                         <select
