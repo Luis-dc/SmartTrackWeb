@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import EpinSummaryCards from '../components/analytics/EpinSummaryCards'
-import RecencyDistributionChart from '../components/analytics/RecencyDistributionChart'
 import SegmentTable from '../components/analytics/SegmentTable'
 import {
   downloadEpinSegments,
@@ -89,9 +88,9 @@ function AnalisisEpinPage() {
   return (
     <div className="container py-4">
       <div className="mb-4">
-        <h2 className="mb-1">Análisis EPIN (Descriptivo)</h2>
+        <h2 className="mb-1">Análisis EPIN</h2>
         <p className="text-muted mb-0">
-          Resumen del último corte, recencia y segmentación EPIN
+          Resumen del último corte y segmentación EPIN
         </p>
       </div>
 
@@ -113,9 +112,6 @@ function AnalisisEpinPage() {
         </div>
       )}
 
-      <div className="mb-4">
-        <RecencyDistributionChart data={recency} loading={loadingRecency} />
-      </div>
 
       <div className="card border-0 shadow-sm rounded-4 mb-4">
         <div className="card-header bg-white border-0 pt-4 px-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
