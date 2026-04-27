@@ -13,6 +13,12 @@ async function fetchWithAuth(url) {
     }
   })
 
+  if (response.status === 401 || response.status === 403) {
+    clearAuth()
+    window.location.href = '/'
+    return
+  }
+  
   const data = await response.json()
 
   if (!response.ok || !data.ok) {

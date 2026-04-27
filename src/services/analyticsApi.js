@@ -127,6 +127,11 @@ export async function getEpinTrendComparison() {
         }
       }
     )
+    if (response.status === 401 || response.status === 403) {
+      clearAuth()
+      window.location.href = '/'
+      return
+    }
   
     return parseJson(response)
 }

@@ -17,6 +17,12 @@ async function request(path, options = {}) {
     headers
   })
 
+  if (response.status === 401 || response.status === 403) {
+    clearAuth()
+    window.location.href = '/'
+    return
+  }
+
   let data = {}
   const contentType = response.headers.get('content-type') || ''
 

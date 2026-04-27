@@ -13,7 +13,12 @@ export async function sendBotMessage(body) {
     },
     body: JSON.stringify(body)
   })
-
+  if (response.status === 401 || response.status === 403) {
+    clearAuth()
+    window.location.href = '/'
+    return
+  }
+  
   if (!response.ok) {
     throw new Error('No se pudo comunicar con el bot')
   }
