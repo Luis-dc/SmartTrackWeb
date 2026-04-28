@@ -24,6 +24,21 @@ function App() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    function handleAuthLogout() {
+      clearAuth()
+      setUser(null)
+      setAuthenticated(false)
+      setActiveView('chat')
+    }
+  
+    window.addEventListener('auth:logout', handleAuthLogout)
+  
+    return () => {
+      window.removeEventListener('auth:logout', handleAuthLogout)
+    }
+  }, [])
+
   function handleLoginSuccess(loggedUser) {
     setUser(loggedUser)
     setAuthenticated(true)

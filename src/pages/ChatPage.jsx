@@ -50,6 +50,7 @@ function ChatPage({ user, onLogout, embedded = false, hideLogoutButton = false, 
       addMessage('bot', data.text || 'Sin respuesta del bot', links)
       setSuggested(data.suggested || [])
     } catch (error) {
+      if (error.code === 'SESSION_EXPIRED') return
       addMessage('bot', 'Ocurrió un error al comunicarse con el bot.')
     } finally {
       setLoading(false)
@@ -85,7 +86,9 @@ function ChatPage({ user, onLogout, embedded = false, hideLogoutButton = false, 
       ])
 
       setSuggested(data.suggested || [])
-    } catch {
+    } catch (error) {
+      if (error.code === 'SESSION_EXPIRED') return
+    
       setMessages([
         {
           id: `bot-error-${Date.now()}`,

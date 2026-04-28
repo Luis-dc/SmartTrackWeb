@@ -1,27 +1,7 @@
-import { getToken } from '../utils/auth'
-
-const API_URL = import.meta.env.VITE_API_URL
+import { apiFetch } from '../utils/apiFetch'
 
 async function request(path, options = {}) {
-  const token = getToken()
-  const isFormData = options.body instanceof FormData
-
-  const headers = {
-    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-    ...(options.headers || {}),
-    ...(token ? { Authorization: `Bearer ${token}` } : {})
-  }
-
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers
-  })
-
-  if (response.status === 401 || response.status === 403) {
-    clearAuth()
-    window.location.href = '/'
-    return
-  }
+  const response = await apiFetch(path, options)
 
   let data = {}
   const contentType = response.headers.get('content-type') || ''
@@ -49,6 +29,7 @@ export async function getUsers(filters = {}) {
   if (filters.includeInactive) params.set('includeInactive', '1')
 
   const query = params.toString()
+
   const data = await request(`/api/users${query ? `?${query}` : ''}`, {
     method: 'GET'
   })

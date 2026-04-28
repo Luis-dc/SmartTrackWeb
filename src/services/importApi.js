@@ -1,63 +1,36 @@
-import { getToken } from '../utils/auth'
+import { apiFetch } from '../utils/apiFetch'
 
-const API_URL = import.meta.env.VITE_API_URL
+async function parseJson(response, fallbackMessage) {
+  const data = await response.json()
+
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error || fallbackMessage)
+  }
+
+  return data
+}
 
 export async function startImport(formData) {
-  const token = getToken()
-
-  const response = await fetch(`${API_URL}/import`, {
+  const response = await apiFetch('/import', {
     method: 'POST',
-    headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
-    },
     body: formData
   })
 
-  const data = await response.json()
-
-  if (!response.ok || !data.ok) {
-    throw new Error(data.error || 'No se pudo iniciar la importación')
-  }
-
-  return data
+  return parseJson(response, 'No se pudo iniciar la importación')
 }
 
 export async function getImportStatus(batchId) {
-  const token = getToken()
-
-  const response = await fetch(`${API_URL}/import/status/${batchId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
-    }
+  const response = await apiFetch(`/import/status/${batchId}`, {
+    method: 'GET'
   })
 
-  const data = await response.json()
-
-  if (!response.ok || !data.ok) {
-    throw new Error(data.error || 'No se pudo consultar el estado del batch')
-  }
-
-  return data
+  return parseJson(response, 'No se pudo consultar el estado del batch')
 }
 
 export async function getImportHistory(limit = 20) {
-  const token = getToken()
-
-  const response = await fetch(`${API_URL}/import/history?limit=${limit}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
-    }
+  const response = await apiFetch(`/import/history?limit=${limit}`, {
+    method: 'GET'
   })
 
-  const data = await response.json()
-
-  if (!response.ok || !data.ok) {
-    throw new Error(data.error || 'No se pudo obtener el historial')
-  }
-
-  return data
+  return parseJson(response, 'No se pudo obtener el historial')
 }

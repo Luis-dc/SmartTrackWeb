@@ -1,5 +1,4 @@
 const API_URL = import.meta.env.VITE_API_URL
-console.log('VITE_API_URL:', API_URL);
 
 export async function loginRequest(body) {
   const response = await fetch(`${API_URL}/auth/login`, {
@@ -9,11 +8,7 @@ export async function loginRequest(body) {
     },
     body: JSON.stringify(body)
   })
-  if (response.status === 401 || response.status === 403) {
-    clearAuth()
-    window.location.href = '/'
-    return
-  }
+
   const data = await response.json()
 
   if (!response.ok || !data.ok) {
