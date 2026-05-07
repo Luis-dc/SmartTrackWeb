@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import LoginPage from './pages/LoginPage'
 import ChatPage from './pages/ChatPage'
-import InteresadosPage from './pages/InteresadosPage'
+import GestionesPage from './pages/GestionesPage'
 import ImportPage from './pages/ImportPage'
 import MainLayout from './layouts/MainLayout'
 import { clearAuth, getUser, isAuthenticated } from './utils/auth'
@@ -58,7 +58,7 @@ function App() {
     const items = [{ key: 'chat', label: 'Chatbot' }]
 
     if (user.role === 'SUPERVISOR' || user.role === 'ADMIN') {
-      items.push({ key: 'interesados', label: 'Interesados' })
+      items.push({ key: 'gestiones', label: 'Gestiones' })
       items.push({ key: 'analisis-epin', label: 'Análisis EPIN' })
       items.push({ key: 'tendencias', label: 'Tendencias' })
       items.push({ key: 'usuarios', label: 'Usuarios' })
@@ -73,8 +73,8 @@ function App() {
 
   const pageTitle = useMemo(() => {
     switch (activeView) {
-      case 'interesados':
-        return 'Interesados'
+      case 'gestiones':
+        return 'Gestiones'
       case 'analisis-epin':
         return 'Análisis EPIN'
       case 'importaciones':
@@ -91,8 +91,8 @@ function App() {
 
   function renderView() {
     switch (activeView) {
-      case 'interesados':
-        return <InteresadosPage />
+      case 'gestiones':
+        return <GestionesPage />
       case 'analisis-epin':
         return <AnalisisEpinPage />
       case 'importaciones':

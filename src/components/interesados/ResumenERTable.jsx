@@ -73,13 +73,21 @@ function ResumenERTable({
   months,
   years,
   onMonthChange,
-  onYearChange
+  onYearChange,
+
+  title = 'Ejecutivos y cantidad de interesados',
+  subtitle = 'El resumen mostrado corresponde al periodo seleccionado',
+  totalLabel = 'Total interesados',
+  totalKey = 'total_interesados',
+  loadingText = 'Cargando ejecutivos...',
+  emptyText = 'No se encontraron ejecutivos para mostrar.',
+  radioName = 'selected-er'
 }) {
   if (loading) {
     return (
       <div className="card border-0 shadow-sm rounded-4">
         <div className="card-body">
-          <p className="mb-0">Cargando ejecutivos...</p>
+          <p className="mb-0">{loadingText}</p>
         </div>
       </div>
     )
@@ -99,9 +107,9 @@ function ResumenERTable({
             }}
           >
             <div>
-              <h5 className="mb-1">Ejecutivos y cantidad de interesados</h5>
+              <h5 className="mb-1">{title}</h5>
               <p className="text-muted mb-0 small">
-                Selecciona un período para visualizar los resultados
+                Selecciona un periodo para visualizar los resultados
               </p>
             </div>
 
@@ -117,7 +125,7 @@ function ResumenERTable({
         </div>
 
         <div className="card-body">
-          <p className="mb-0">No se encontraron ejecutivos para mostrar.</p>
+          <p className="mb-0">{emptyText}</p>
         </div>
       </div>
     )
@@ -136,10 +144,8 @@ function ResumenERTable({
           }}
         >
           <div>
-            <h5 className="mb-1">Ejecutivos y cantidad de interesados</h5>
-            <p className="text-muted mb-0 small">
-              El resumen mostrado corresponde al período seleccionado
-            </p>
+            <h5 className="mb-1">{title}</h5>
+            <p className="text-muted mb-0 small">{subtitle}</p>
           </div>
 
           <HeaderPeriodSelectors
@@ -162,7 +168,7 @@ function ResumenERTable({
                 <th>ER</th>
                 <th>Correo</th>
                 <th>Región</th>
-                <th>Total interesados</th>
+                <th>{totalLabel}</th>
               </tr>
             </thead>
             <tbody>
@@ -179,7 +185,7 @@ function ResumenERTable({
                     <td className="text-center">
                       <input
                         type="radio"
-                        name="selected-er"
+                        name={radioName}
                         className="form-check-input"
                         checked={isSelected}
                         onChange={() => onSelectER(item)}
@@ -189,7 +195,7 @@ function ResumenERTable({
                     <td>{item.name || 'N/D'}</td>
                     <td>{item.email || 'N/D'}</td>
                     <td>{item.region || 'N/D'}</td>
-                    <td>{item.total_interesados ?? 0}</td>
+                    <td>{item[totalKey] ?? 0}</td>
                   </tr>
                 )
               })}
